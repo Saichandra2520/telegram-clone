@@ -1,0 +1,70 @@
+
+
+
+.main-container{
+    background-image: url('../images/background.jpg');
+    margin: 0;
+    background-size: cover;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.chatlist-heading-text{
+
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.chatlist-heading-text p{
+    color: #707579;
+    font-size: .9rem;
+}
+
+.chatlist-time{
+    margin-left: auto;
+    color: #707579;
+    
+}
+
+.chatlist-time p{
+    font-size: .8rem;
+}
+
+
+.menu-header{
+    display: flex;
+    height: 48px;
+    align-items: center;
+    margin-left: .7rem;
+    margin-right: 1rem;
+}
+
+
+.drawer-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem .6rem 1rem;
+}
+
+.profile-name{
+    font-size: 14px;
+}
+
+.toggleButton{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.chatlist {
+    position: relative;
+    height: 90vh;
+    overflow: auto;
+}
+
+.chatlist::-webkit-scrollbar{
+    width: 5px;
+}
