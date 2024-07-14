@@ -2,11 +2,15 @@
 
 
 .main-container{
-    background-image: url('../images/background.jpg');
+    
     margin: 0;
-    background-size: cover;
+    background-size: contain;
+    background-color: #96be8d;
+    
     overflow: hidden;
     height: 100vh;
+    mix-blend-mode: soft-light;
+    
 }
 
 .chatlist-heading-text{
@@ -67,4 +71,32 @@
 
 .chatlist::-webkit-scrollbar{
     width: 5px;
+}
+
+.chat-messages-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3390ec;
+    margin: 0;
+    padding: .5rem;
+    z-index: 4;
+}
+
+.item-1, .item-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.background-img{
+    background-image: url(../images/background.svg);
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    mix-blend-mode: soft-light;
+    z-index: -1;
 }

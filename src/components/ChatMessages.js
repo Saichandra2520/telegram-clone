@@ -3,21 +3,28 @@ import { getChatMessages } from '../services/api';
 import { CircularProgress, Typography, Box, TextField, Button } from '@mui/material';
 import { Send } from '@mui/icons-material';
 import dayjs from 'dayjs';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { IconButton, Avatar } from "@mui/material";
+import { deepOrange, deepPurple } from '@mui/material/colors';
+import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
+import backgroundImg from '../images/background.svg'
 
-const ChatMessages = ({ chatId }) => {
+const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [newMessage, setNewMessage] = useState('');
   const [topTime, setTopTime] = useState(null);
+  const [chatId,setchatId] = useState(chat.id);
 
   const scrollTimeoutRef = useRef(null);
   const chatContainerRef = useRef(null);
   const messageEndRef = useRef(null);
 
   useEffect(() => {
-    fetchMessages(chatId);
-  }, [chatId]);
+    fetchMessages(chat.id);
+  }, [chat.id]);
 
   const fetchMessages = (chatId) => {
     setLoading(true);
@@ -97,19 +104,35 @@ const ChatMessages = ({ chatId }) => {
   }
 
   return (
-    <Box display="flex" flexDirection="column" height="100vh" p={2}>
+    <React.Fragment>{ chat.id && (
       
-      <Box flexGrow={1} overflow="auto" mb={2} ref={chatContainerRef} sx={{position:'relative'}}>
+      <div className="chat-messages-header">
+        <div className='item-1'>
+        <IconButton onClick={handleBackToList} >
+          <ArrowBackIcon sx={{color:'#ffffff'}}/>
+        </IconButton>
+        <Avatar sx={{ bgcolor: deepPurple[500], marginRight:'.8rem', width:'36px', height:'36px', fontSize:'14px' }}  >{chat.name?.substring(0,1)}</Avatar>
+        <Typography sx={{ fontSize:'1.1rem',
+          fontWeight:'450',
+          color:'#ffffff',
+         }} >{chat.name ? chat.name:'Anonymous'}</Typography>
+        </div>
+        <div className='item-2'>
+          <LocalPhoneRoundedIcon sx={{color:'#ffffff'}} />
+          <MoreVertRoundedIcon sx={{color:'#ffffff'}} />
+        </div>
+      </div>
+    )}
+    <Box display="flex" flexDirection="column" height="100vh" p={2}  >
+      
+      <Box flexGrow={1} overflow="auto" mb={2} ref={chatContainerRef} >
       {topTime && (
         <Typography
         variant="caption" 
         color="#ffffff" 
         sx={{
           backgroundColor:'rgba(0, 0, 0, 0.2)',
-          marginLeft:'auto',
-          marginRight:'auto',
           textAlign:'center',
-          width:'fit-content',
           padding: '4px 6px',
           borderRadius: '10px',
           fontSize:'10px',
@@ -141,12 +164,16 @@ const ChatMessages = ({ chatId }) => {
                       padding: '4px 6px',
                       borderRadius: '10px',
                       fontSize:'10px',
+                      
                     }}
                     >
                   {formatDate(message.created_at)}
                 </Typography>
               )}
-          <Box id={index} mb={2} display="flex" justifyContent={message.sender_id == 1 ? 'flex-start' : 'flex-end' }>
+          <Box id={index} mb={2} display="flex" justifyContent={message.sender_id == 1 ? 'flex-start' : 'flex-end' } sx={{maxWidth: '600px',
+              margin: 'auto',
+
+          }}>
             <Box
               p={2}
               borderRadius={message.sender_id == 1 ? "16px 16px 14px 0px" : "16px 16px 0px 16px"}
@@ -212,7 +239,9 @@ const ChatMessages = ({ chatId }) => {
           Send
         </Button>
       </Box>
-    </Box>);
+    </Box>
+    </React.Fragment>
+    );
 };
 
 export default ChatMessages;

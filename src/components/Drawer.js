@@ -11,7 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
-import profileImg from '../images/background.jpg'
+import profileImg from '../images/background.svg'
 import { Avatar, Typography } from '@mui/material';
 import ModeNightRoundedIcon from '@mui/icons-material/ModeNightRounded';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';

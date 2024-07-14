@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { getAllChats } from '../services/api';
-import { List, ListItem, ListItemText, CircularProgress, Typography } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import dayjs from 'dayjs';
+import React, { useEffect, useState } from "react";
+import { getAllChats } from "../services/api";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import { deepOrange, deepPurple } from "@mui/material/colors";
+import dayjs from "dayjs";
 
-const ChatList = ({ onSelectChat }) => {
+const ChatList = ({ onSelectChat, onSelectedName }) => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
 
   useEffect(() => {
     getAllChats()
       .then((response) => {
         console.log(response.data);
-        setChats(response.data.sort((a,b) => b.updated_at - a.updated_at));
+        setChats(response.data.sort((a, b) => b.updated_at - a.updated_at));
         setLoading(false);
       })
       .catch((err) => {
@@ -23,8 +28,6 @@ const ChatList = ({ onSelectChat }) => {
         setLoading(false);
       });
   }, []);
-
-  
 
   if (loading) {
     return <CircularProgress />;
@@ -36,34 +39,57 @@ const ChatList = ({ onSelectChat }) => {
 
   const formatDate = (timestamp) => {
     const date = dayjs(timestamp);
-    if (date.isSame(dayjs(), 'day')) {
-      return 'Today';
+    if (date.isSame(dayjs(), "day")) {
+      return "Today";
     }
-    return date.format('MMMM D, YYYY');
+    return date.format("MMMM D, YYYY");
   };
 
   const getDate = (date) => {
     const dateObj = new Date(date);
-    
+
     return dateObj.getDate();
-  }
+  };
 
   return (
-    <List >
-      {chats && chats.map((chat) => (
-        <ListItem button key={chat.created_by} onClick={() => onSelectChat(chat.id)} sx={{height:'72px', display:'flex', alignItems:'center'}}  >
-          <Avatar sx={{ bgcolor: deepPurple[500], marginRight:'.8rem', width:'52px', height:'52px' }}  >{chat.creator.name?.substring(0,1)}</Avatar>
-          <div className='chatlist-heading-text'>
-            <ListItemText primary={chat.creator.name ? chat.creator.name : 'Anonymous'} sx={{margin:'0',fontWeight:'700'}} primaryTypographyProps={{fontWeight:'450'}} />
-            <p>{chat.status}</p>
-          </div>
-          <div className='chatlist-time'>
-          <p>
-            { dayjs().date() == getDate(chat.updated_at) ? dayjs(chat.updated_at).format('h:mm A') : dayjs(chat.updated_at).format('DD MMM')}
-          </p>
-          </div>
-        </ListItem>
-      ))}
+    <List sx={{ overflow: "auto" }}>
+      {chats &&
+        chats.map((chat) => (
+          <ListItem
+            button
+            key={chat.created_by}
+            onClick={() => {
+              onSelectChat({ id: chat.id, name: chat.creator.name });
+            }}
+            sx={{ height: "72px", display: "flex", alignItems: "center" }}
+          >
+            <Avatar
+              sx={{
+                bgcolor: deepPurple[500],
+                marginRight: ".8rem",
+                width: "52px",
+                height: "52px",
+              }}
+            >
+              {chat.creator.name?.substring(0, 1)}
+            </Avatar>
+            <div className="chatlist-heading-text">
+              <ListItemText
+                primary={chat.creator.name ? chat.creator.name : "Anonymous"}
+                sx={{ margin: "0", fontWeight: "700" }}
+                primaryTypographyProps={{ fontWeight: "450" }}
+              />
+              <p>{chat.status}</p>
+            </div>
+            <div className="chatlist-time">
+              <p>
+                {dayjs().date() == getDate(chat.updated_at)
+                  ? dayjs(chat.updated_at).format("h:mm A")
+                  : dayjs(chat.updated_at).format("DD MMM")}
+              </p>
+            </div>
+          </ListItem>
+        ))}
     </List>
   );
 };
