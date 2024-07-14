@@ -150,7 +150,7 @@ const ChatMessages = ({ chatId }) => {
             <Box
               p={2}
               borderRadius={message.sender_id == 1 ? "16px 16px 14px 0px" : "16px 16px 0px 16px"}
-              bgcolor={message.sender_id == 1 ? '#ffffff' : 'grey.300'}
+              bgcolor={message.sender_id == 1 ? '#ffffff' : '#e3fee0'}
               maxWidth="60%"
               fontSize={"12px"}
               sx={{
@@ -174,7 +174,7 @@ const ChatMessages = ({ chatId }) => {
                 
                }}  >{message.message}</Typography>
               <Typography
-                    color="textSecondary"
+                    color={message.sender_id == 1 ? 'textSecondary' : '#5ca853'}
                     style={{
                       position: 'relative',
                       fontSize: '11px',
