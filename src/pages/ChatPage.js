@@ -17,7 +17,7 @@ const ChatPage = () => {
   });
 
   const [state, setState] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
   const isMobile = useMediaQuery("(max-width:900px)");
 
   const toggleDrawer = (open) => (event) => {
