@@ -14,12 +14,14 @@ You can view the live demo of the project [here](https://telegram-clone-ecru.ver
 
 
 ## Mobile View
-![Mobile View](src/images/img1.jpeg)
-![Mobile View](src/images/img2.jpeg)
-![Mobile View](src/images/img3.jpeg)
+<div>
+<img src="src/images/img1.jpeg" alt="Mobile View" width="300"/>
+<img src="src/images/img2.jpeg" alt="Mobile View" width="300"/>
+<img src="src/images/img3.jpeg" alt="Mobile View" width="300"/>
+<div>
 
 ## Desktop View
-![Desktop View](src/images/img4.jpeg)
+<img src="src/images/img4.png" alt="Mobile View" width="600"/>
 
 
 
