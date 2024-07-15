@@ -1,71 +1,115 @@
-# Getting Started with Create React App
+Great! Here is the updated README file with the provided links:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+# Telegram UI Clone with React
 
-In the project directory, you can run:
+## Introduction
 
-### `npm start`
+This project is a pixel-perfect replica of the Telegram messaging application, created for the assignment round for the position of Frontend React Developer at BeyondChats. The application has been built to closely mimic the UI/UX of the Telegram app in both desktop and mobile views using ReactJS and MUI (Material-UI). The application fetches chat and message data from provided API endpoints to display real-time data.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Live Demo
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+You can view the live demo of the project [here](https://telegram-clone-ecru.vercel.app/).
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Mobile View
+![Mobile View](src/images/img1.jpeg)
+![Mobile View](src/images/img2.jpeg)
+![Mobile View](src/images/img3.jpeg)
 
-### `npm run build`
+## Desktop View
+![Desktop View](src/images/img4.jpeg)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Structure
 
-### `npm run eject`
+The project is organized as follows:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+/src
+  /components
+    ChatList.js
+    ChatMessages.js
+    Drawer.js
+    Header.js
+    ToggleButton.js
+  /pages
+    ChatPage.js
+  /services
+    api.js
+  /styles
+    styles.css
+  App.js
+  index.js
+  ...
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **Responsive Design:** The application is fully responsive and adjusts seamlessly between desktop and mobile views.
+- **Chat List:** Displays a list of chats fetched from the provided API endpoint.
+- **Chat Window:** Displays messages for a selected chat, fetched from the provided API endpoint.
+- **Real-time Data:** Utilizes API endpoints to display real-time chat and message data.
+- **Material-UI Integration:** Uses Material-UI components for a polished and modern UI.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Technologies Used
 
-## Learn More
+- **ReactJS**: For building the user interface.
+- **Material-UI (MUI)**: For UI components and styling.
+- **Axios**: For making API requests.
+- **React Router**: For handling navigation between views.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## API Endpoints
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Get All Chats**:
+   - **URL**: `https://devapi.beyondchats.com/api/get_all_chats?page=1`
+   - **Method**: GET
+   - **Description**: Returns a list of chats (paginated API).
 
-### Code Splitting
+2. **Get Chat Messages**:
+   - **URL**: `https://devapi.beyondchats.com/api/get_chat_messages?chat_id=3888`
+   - **Method**: GET
+   - **Description**: Returns a list of messages for a given chat ID.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Setup Instructions
 
-### Analyzing the Bundle Size
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Saichandra2520/telegram-clone
+   cd telegram-clone
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-### Making a Progressive Web App
+3. **Run the Application**:
+   ```bash
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+4. **Build the Application**:
+   ```bash
+   npm run build
+   ```
 
-### Advanced Configuration
+## Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+The project has been deployed using Vercel. You can view the live version of the application [here](https://telegram-clone-ecru.vercel.app/).
 
-### Deployment
+## Conclusion
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+This project was developed as part of an assignment to demonstrate my skills in ReactJS and UI/UX design. While the 48-hour time frame was a challenge, I strived to replicate the Telegram UI/UX as closely as possible and implement the necessary functionality using the provided API endpoints. I hope this submission meets your expectations.
 
-### `npm run build` fails to minify
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# telegram-clone
+This project is licensed under the MIT License.
+
+---
+
+Feel free to reach out if you have any questions or need further clarification. Thank you for the opportunity!
+
+---
