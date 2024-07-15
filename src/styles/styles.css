@@ -7,7 +7,7 @@
     background-size: contain;
     background-color: #96be8d;
     
-    overflow: hidden;
+       
     height: 100vh;
     mix-blend-mode: soft-light;
     
@@ -100,3 +100,20 @@
     mix-blend-mode: soft-light;
     z-index: -1;
 }
+
+.time{
+    display: inline-block;
+    position: relative;
+    font-size: 12px;
+    max-width: 85px;
+    white-space: nowrap;
+    justify-content: end;
+    float:right;
+    bottom: -8px;
+    margin-left: 4px;
+}
+
+.chat-container-wrapper{
+    height: 100vh;
+}
+

@@ -36,7 +36,11 @@ const ChatPage = () => {
 
   return (
     <div className="main-container">
-      <Grid container spacing={0}>
+      <Grid container spacing={0} 
+      sx={{
+        height: "100vh",
+        overflow:'hidden'
+      }} >
         {!isMobile || !selectedChatId.id ? (
           <Grid
             item
@@ -84,11 +88,13 @@ const ChatPage = () => {
           item
           xs={12}
           md={8.5}
-          sx={{ display: selectedChatId ? "block" : "none" }}
+          sx={{ display: selectedChatId ? "block" : "none", position:'relative' }}
         >
           <div className='background-img'></div>
           {selectedChatId.id != null ? (
+            <div className="chat-container-wrapper">
             <ChatMessages chat={selectedChatId} isMobile={isMobile} handleBackToList={handleBackToList}/>
+            </div>
           ) : (
             <Typography></Typography>
           )}

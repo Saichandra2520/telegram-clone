@@ -8,7 +8,8 @@ import { IconButton, Avatar } from "@mui/material";
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import backgroundImg from '../images/background.svg'
+import backgroundImg from '../images/background.svg';
+import MicRoundedIcon from '@mui/icons-material/MicRounded';
 
 const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
   const [messages, setMessages] = useState([]);
@@ -16,7 +17,7 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
   const [error, setError] = useState(null);
   const [newMessage, setNewMessage] = useState('');
   const [topTime, setTopTime] = useState(null);
-  const [chatId,setchatId] = useState(chat.id);
+
 
   const scrollTimeoutRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -53,33 +54,39 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
   const handleScroll = () => {
     const chatContainer = chatContainerRef.current;
     if (!chatContainer) return;
-
+  
+    // Clear the previous timeout
     if (scrollTimeoutRef.current) {
       clearTimeout(scrollTimeoutRef.current);
     }
-    
-    const children = Array.from(chatContainer.children);
-
-    for (const child of children) {
-      const rect = child.getBoundingClientRect();
-      if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-        const index = child.id;
-        
-        const message = messages[index];
-        if (message) {
-          setTopTime(dayjs(message.created_at).format('h:mm A'));
-          
+  
+    // Using requestAnimationFrame for smoother updates
+    const updateTopTime = () => {
+      const children = Array.from(chatContainer.children);
+  
+      for (const child of children) {
+        const rect = child.getBoundingClientRect();
+        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+          const index = child.id;
+          const message = messages[index];
+          if (message) {
+            setTopTime(dayjs(message.created_at).format('h:mm A'));
+          }
+          break;
         }
-        break;
       }
-    }
-    scrollTimeoutRef.current = setTimeout(() => setTopTime(null), 1000);
+  
+      // Clear the top time after 1 second if no message is in view
+      scrollTimeoutRef.current = setTimeout(() => setTopTime(null), 1000);
+    };
+  
+    requestAnimationFrame(updateTopTime);
   };
 
   useEffect(() => {
     const chatContainer = chatContainerRef.current;
     chatContainer?.addEventListener('scroll', handleScroll);
-
+    console.log("Hello")
     return () => {
       chatContainer?.removeEventListener('scroll', handleScroll);
     };
@@ -105,6 +112,8 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
 
   return (
     <React.Fragment>{ chat.id && (
+        
+      // Heading section
       
       <div className="chat-messages-header">
         <div className='item-1'>
@@ -123,12 +132,20 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
         </div>
       </div>
     )}
-    <Box display="flex" flexDirection="column" height="100vh" p={2}  >
+    <Box display="flex" flexDirection="column" height="100vh" sx={{
+      padding:'1px 5px 3rem 5px'
+    }} >
       
-      <Box flexGrow={1} overflow="auto" mb={2} ref={chatContainerRef} >
+      <Box flexGrow={1} overflow="auto" mb={2} ref={chatContainerRef} sx={{
+        position:'relative'
+      }} >
+        <div>
+          
+        </div>
       {topTime && (
         <Typography
         variant="caption" 
+        
         color="#ffffff" 
         sx={{
           backgroundColor:'rgba(0, 0, 0, 0.2)',
@@ -137,14 +154,15 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
           borderRadius: '10px',
           fontSize:'10px',
           left: '50%',
-          position:'fixed',
+          position:'sticky',
           top:'20px',
-          zIndex:100,
+          zIndex:10,
         }}
         >
           {topTime}
         </Typography>
       )}
+      {/* Messahes section */}
         {messages.map((message,index) => {
           
           const showDate = index === 0 || !dayjs(message.created_at).isSame(messages[index - 1].created_at, 'day');
@@ -156,7 +174,7 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
                     display='block' 
                     color="#ffffff" 
                     sx={{
-                      backgroundColor:'rgba(0, 0, 0, 0.2)',
+                      backgroundColor:'#00000033',
                       marginLeft:'auto',
                       marginRight:'auto',
                       textAlign:'center',
@@ -164,6 +182,9 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
                       padding: '4px 6px',
                       borderRadius: '10px',
                       fontSize:'10px',
+                      position: 'sticky',
+                      top:'20px',
+                      zIndex: '10',
                       
                     }}
                     >
@@ -178,7 +199,7 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
               p={2}
               borderRadius={message.sender_id == 1 ? "16px 16px 14px 0px" : "16px 16px 0px 16px"}
               bgcolor={message.sender_id == 1 ? '#ffffff' : '#e3fee0'}
-              maxWidth="60%"
+              maxWidth="85%"
               fontSize={"12px"}
               sx={{
                 lineHeight:'21px',
@@ -186,7 +207,7 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
                 position:'relative',
                 display:'flex',
                 justifyContent:'flex-start',
-                padding: '2px 5px 5px 10px',
+                padding: '5px 5px 5px 10px',
                 margin: '4px 8px 5px',
                 whiteSpace: 'pre-wrap'
               }}
@@ -199,21 +220,11 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
                 fontWeight:'400',
                 lineHeight: 1.3125,
                 
-               }}  >{message.message}</Typography>
-              <Typography
-                    color={message.sender_id == 1 ? 'textSecondary' : '#5ca853'}
-                    style={{
-                      position: 'relative',
-                      fontSize: '11px',
-                      display: 'flex',
-                      maxWidth:'85px',
-                      marginLeft: '5px',
-                      alignSelf: 'end',
-                      bottom: '-3px'
-                    }}
-                  >
-                    {dayjs(message.created_at).format('h:mm A')}
-              </Typography>
+               }} >{message.message}
+               <span className='time'>
+                  {dayjs(message.created_at).format('h:mm A')}
+                </span></Typography>
+              
             </Box>
           </Box>
           </React.Fragment>
@@ -221,9 +232,27 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
         })}
         <div ref={messageEndRef} />
       </Box>
-      <Box display="flex" mt="auto">
+      <Box className="message-sender" display="flex" mt="auto" 
+        sx={{
+          width:'100%',
+          maxWidth:'650px',
+          position:'sticky',
+          bottom:'0',
+          marginLeft:'auto',
+          marginRight:'auto',
+          display:'flex',
+          gap:'1rem'
+        }}>
         <TextField
-          variant="outlined"
+          autoFocus={true}
+          sx={{
+            border:'none',
+            outline:'none',
+            bgcolor:'#ffffff',
+            borderRadius:'20px 20px 20px 20px',
+            "& fieldset": { border: 'none' },
+            
+          }}
           fullWidth
           placeholder="Type your message..."
           value={newMessage}
@@ -235,8 +264,8 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
             }
           }}
         />
-        <Button variant="contained" color="primary" onClick={handleSendMessage} startIcon={<Send />}>
-          Send
+        <Button variant="contained" color="primary" onClick={handleSendMessage} sx={{borderRadius:'50%', width:'50px'}}>
+          <MicRoundedIcon sx={{fontSize:'2rem'}} />
         </Button>
       </Box>
     </Box>
