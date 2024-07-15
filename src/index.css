@@ -8,5 +8,9 @@
     font-family: "Roboto", sans-serif;
     font-style: normal;
     box-sizing: border-box;
+    transition: all 1s ease-in-out;
 }
 
+:root{
+    --primary-color: #229ED9;
+}

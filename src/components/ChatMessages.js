@@ -1,17 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { getChatMessages } from '../services/api';
 import { CircularProgress, Typography, Box, TextField, Button } from '@mui/material';
-import { Send } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IconButton, Avatar } from "@mui/material";
-import { deepOrange, deepPurple } from '@mui/material/colors';
+import { deepPurple } from '@mui/material/colors';
 import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
-import backgroundImg from '../images/background.svg';
 import MicRoundedIcon from '@mui/icons-material/MicRounded';
 
-const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
+const ChatMessages = ({ chat,isMobile,handleBackToList,dark }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -43,10 +41,6 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
 
   const handleSendMessage = () => {
     if (newMessage.trim() === '') return;
-    // Add logic to send message to the server here
-
-    // For now, we'll just append the message to the local state
-    // setMessages([...messages, { id: Date.now(), text: newMessage, sender: 'You' }]);
     setNewMessage('');
   };
 
@@ -55,7 +49,7 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
     const chatContainer = chatContainerRef.current;
     if (!chatContainer) return;
   
-    // Clear the previous timeout
+  
     if (scrollTimeoutRef.current) {
       clearTimeout(scrollTimeoutRef.current);
     }
@@ -115,7 +109,15 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
         
       // Heading section
       
-      <div className="chat-messages-header">
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: `${dark ? '#292730' : 'var(--primary-color)'}`,
+        margin: 0,
+        padding: '.5rem',
+        zIndex: 4,
+      }} >
         <div className='item-1'>
         <IconButton onClick={handleBackToList} >
           <ArrowBackIcon sx={{color:'#ffffff'}}/>
@@ -130,7 +132,7 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
           <LocalPhoneRoundedIcon sx={{color:'#ffffff'}} />
           <MoreVertRoundedIcon sx={{color:'#ffffff'}} />
         </div>
-      </div>
+      </Box>
     )}
     <Box display="flex" flexDirection="column" height="100vh" sx={{
       padding:'1px 5px 3rem 5px'
@@ -162,7 +164,7 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
           {topTime}
         </Typography>
       )}
-      {/* Messahes section */}
+      {/* Messages section */}
         {messages.map((message,index) => {
           
           const showDate = index === 0 || !dayjs(message.created_at).isSame(messages[index - 1].created_at, 'day');
@@ -198,12 +200,12 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
             <Box
               p={2}
               borderRadius={message.sender_id == 1 ? "16px 16px 14px 0px" : "16px 16px 0px 16px"}
-              bgcolor={message.sender_id == 1 ? '#ffffff' : '#e3fee0'}
+              bgcolor={message.sender_id == 1 ? dark ? '#151418' : '#ffffff' : dark? '#8774e1' :'#e3fee0'}
               maxWidth="85%"
               fontSize={"12px"}
               sx={{
                 lineHeight:'21px',
-                color: '#000000',
+                
                 position:'relative',
                 display:'flex',
                 justifyContent:'flex-start',
@@ -216,7 +218,7 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
               <Typography variant="body2" sx={{
                 maxWidth:'570px',
                 fontSize:'16px',
-                color:'#000000',
+                color: `${dark? '#ffffff' : '#000000'}`,
                 fontWeight:'400',
                 lineHeight: 1.3125,
                 
@@ -264,8 +266,8 @@ const ChatMessages = ({ chat,isMobile,handleBackToList }) => {
             }
           }}
         />
-        <Button variant="contained" color="primary" onClick={handleSendMessage} sx={{borderRadius:'50%', width:'50px'}}>
-          <MicRoundedIcon sx={{fontSize:'2rem'}} />
+        <Button variant="contained" color="primary" onClick={handleSendMessage} sx={{borderRadius:'50%', width:'50px',backgroundColor:`${dark? '#8774e1' :'#229ED9'}`}}>
+          <MicRoundedIcon sx={{fontSize:'2rem',backgroundColor:`${dark? '#8774e1' :'#229ED9'}`}} />
         </Button>
       </Box>
     </Box>

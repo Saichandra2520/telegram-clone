@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import ChatList from "../components/ChatList";
 import ChatMessages from "../components/ChatMessages";
-import { Grid, Container, Typography, IconButton, Avatar } from "@mui/material";
+import { Grid, Container, Typography, IconButton, Avatar, Box } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Drawer from "../components/Drawer";
 import ToggleButtonChats from "../components/ToggleButtonChats";
 import { useMediaQuery } from "@mui/material";
+import bgImg from '../images/background.png';
+import bgImg2 from '../images/wallpaper.png'
+
 
 const ChatPage = () => {
   const [selectedChatId, setSelectedChatId] = useState({id: null,
@@ -14,6 +17,7 @@ const ChatPage = () => {
   });
 
   const [state, setState] = useState(false);
+  const [dark, setDark] = useState(false);
   const isMobile = useMediaQuery("(max-width:900px)");
 
   const toggleDrawer = (open) => (event) => {
@@ -34,27 +38,39 @@ const ChatPage = () => {
     });
   };
 
+  
+
   return (
-    <div className="main-container">
+    <Box sx={{
+      margin: 0,
+    
+    backgroundSize: 'contain',
+    
+    
+    height: '100vh',
+    mixBlendMode:'soft-light',
+    }} >
+      
       <Grid container spacing={0} 
       sx={{
         height: "100vh",
-        overflow:'hidden'
+        overflow:'hidden',
+        
       }} >
         {!isMobile || !selectedChatId.id ? (
           <Grid
             item
             xs={12}
             md={3.5}
-            sx={{ backgroundColor: "#fbfefb", height: "100vh" }}
+            sx={{ color:'#ffffff',backgroundColor: `${dark ? '#292730' : 'var(--primary-color)'}`, height: "100vh" }}
           >
-            <Drawer state={state} toggleDrawer={toggleDrawer} />
+            <Drawer state={state} toggleDrawer={toggleDrawer} setDark={setDark} dark={dark} />
             <div className="menu-header">
               <MenuRoundedIcon
                 sx={{
                   marginLeft: "1rem",
                   fontSize: "1.5rem",
-                  color: "#707579",
+                  color: "#ffffff",
                   cursor: "pointer",
                 }}
                 onClick={toggleDrawer(true)}
@@ -72,15 +88,15 @@ const ChatPage = () => {
                 sx={{
                   marginLeft: "auto",
                   fontSize: "1.5rem",
-                  color: "#707579",
+                  color: "#ffffff",
                 }}
               />
             </div>
             <div className="toggleButton">
-              <ToggleButtonChats />
+              <ToggleButtonChats dark={dark} />
             </div>
             <div className="chatlist">
-              <ChatList onSelectChat={setSelectedChatId} />
+              <ChatList onSelectChat={setSelectedChatId} dark={dark} />
             </div>
           </Grid>
         ) : null}
@@ -90,17 +106,30 @@ const ChatPage = () => {
           md={8.5}
           sx={{ display: selectedChatId ? "block" : "none", position:'relative' }}
         >
-          <div className='background-img'></div>
+          <Box className="saichandra"
+            sx={{
+              backgroundImage: `url(${ dark? bgImg2 :bgImg})`,
+              backgroundSize:'contain',
+              width: '100%',
+              height: '100vh',
+              position: 'absolute',
+              top: 0,
+              mixBlendMode: 'soft-light',
+              zIndex: '-1',
+              
+            }}>
+
+          </Box>
           {selectedChatId.id != null ? (
             <div className="chat-container-wrapper">
-            <ChatMessages chat={selectedChatId} isMobile={isMobile} handleBackToList={handleBackToList}/>
+            <ChatMessages chat={selectedChatId} isMobile={isMobile} handleBackToList={handleBackToList} dark={dark} />
             </div>
           ) : (
             <Typography></Typography>
           )}
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

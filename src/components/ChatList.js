@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 import dayjs from "dayjs";
 
-const ChatList = ({ onSelectChat, onSelectedName }) => {
+const ChatList = ({ onSelectChat, onSelectedName,dark }) => {
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -51,8 +51,10 @@ const ChatList = ({ onSelectChat, onSelectedName }) => {
     return dateObj.getDate();
   };
 
+  let classNameHolder = ["#5CC85E","#229ED9","#df3f40"];
+
   return (
-    <List sx={{ overflow: "auto" }}>
+    <List sx={{ overflow: "auto", backgroundColor: `${ dark ? '#151418' : '' }`, color: `${ dark ? '' : '#151418'}`  }}>
       {chats &&
         chats.map((chat) => (
           <ListItem
@@ -64,8 +66,9 @@ const ChatList = ({ onSelectChat, onSelectedName }) => {
             sx={{ height: "72px", display: "flex", alignItems: "center" }}
           >
             <Avatar
+              
               sx={{
-                bgcolor: deepPurple[500],
+                bgcolor: classNameHolder[Math.floor(Math.random() * 3)],
                 marginRight: ".8rem",
                 width: "52px",
                 height: "52px",
@@ -76,7 +79,7 @@ const ChatList = ({ onSelectChat, onSelectedName }) => {
             <div className="chatlist-heading-text">
               <ListItemText
                 primary={chat.creator.name ? chat.creator.name : "Anonymous"}
-                sx={{ margin: "0", fontWeight: "700" }}
+                sx={{ margin: "0", fontWeight: "700" ,color: `${ dark ? '#ffffff' : ''}` }}
                 primaryTypographyProps={{ fontWeight: "450" }}
               />
               <p>{chat.status}</p>

@@ -30,6 +30,7 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import text from '../../node_modules/dom-helpers/esm/text';
 
 
 function CustomTabPanel(props) {
@@ -61,7 +62,7 @@ function a11yProps(index) {
   };
 }
 
-export default function ToggleButtonChats() {
+export default function ToggleButtonChats({dark}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -69,13 +70,13 @@ export default function ToggleButtonChats() {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="All" {...a11yProps(0)} />
-          <Tab label="Regular" {...a11yProps(1)} />
-          <Tab label="Unread" {...a11yProps(2)} />
-          <Tab label="Personal" {...a11yProps(2)} />
+    <Box sx={{ width: '100%'}}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider',textColor: `${dark ? '#229ED9':'#fff' }` }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant='scrollable' TabIndicatorProps={{style: {background:`${dark ? '#229ED9':'#fff' }`,height:'4px',borderRadius:'20px' }}} >
+          <Tab label="All" {...a11yProps(0)} sx={{ color:'#ffffff' }} />
+          <Tab label="Regular" {...a11yProps(1)} sx={{ color:'#ffffff' }} />
+          <Tab label="Unread" {...a11yProps(2)} sx={{ color:'#ffffff' }} />
+          <Tab label="Personal" {...a11yProps(2)}sx={{ color:'#ffffff' }} />
         </Tabs>
       </Box>
       {/* <CustomTabPanel value={value} index={0}>
